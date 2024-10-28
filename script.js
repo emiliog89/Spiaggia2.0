@@ -1,6 +1,7 @@
 // Configurazione iniziale degli ombrelloni
 const numeroOmbrelloni = 20;
 const ombrelloni = Array(numeroOmbrelloni).fill("disponibile"); // Array che rappresenta lo stato di ogni ombrellone
+const prenotazioni = []; // Array per memorizzare le prenotazioni
 
 // Configurazione tariffe stagionali
 const tariffeStagionali = {
@@ -56,6 +57,17 @@ function calcolaCosto(data, durata) {
     return tariffaGiornaliera * durata;
 }
 
+// Funzione per aggiornare la lista delle prenotazioni
+function aggiornaListaPrenotazioni() {
+    const prenotazioniList = document.getElementById("prenotazioniList");
+    prenotazioniList.innerHTML = ""; // Pulisce la lista
+    prenotazioni.forEach((prenotazione) => {
+        const li = document.createElement("li");
+        li.textContent = `Ombrellone ${prenotazione.ombrelloneId + 1} - ${prenotazione.nome} - Data: ${prenotazione.data} - Durata: ${prenotazione.durata} giorni - Costo: €${prenotazione.costoTotale}`;
+        prenotazioniList.appendChild(li);
+    });
+}
+
 // Funzione per gestire la prenotazione
 document.getElementById("formPrenotazione").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -67,8 +79,11 @@ document.getElementById("formPrenotazione").addEventListener("submit", (e) => {
     if (ombrelloni[ombrelloneId] === "disponibile") {
         const costoTotale = calcolaCosto(data, durata);
         ombrelloni[ombrelloneId] = "prenotato";
+        prenotazioni.push({ ombrelloneId, nome, data, durata, costoTotale });
         alert(`Ombrellone ${ombrelloneId + 1} prenotato da ${nome} per il giorno ${data} (Durata: ${durata} giorni). Costo totale: €${costoTotale}`);
-        generaSpiaggia();
+        
+        generaSpiaggia(); // Aggiorna la griglia
+        aggiornaListaPrenotazioni(); // Aggiorna la lista delle prenotazioni
     } else {
         alert("L'ombrellone selezionato non è disponibile.");
     }
