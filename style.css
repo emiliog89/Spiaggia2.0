@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#spiaggia {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.ombrellone {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.disponibile {
+    background-color: lightgreen;
+}
+
+.occupato {
+    background-color: lightcoral;
+}
+
+.prenotato {
+    background-color: orange;
+}
+
+#prenotazione {
+    margin-top: 20px;
+}
